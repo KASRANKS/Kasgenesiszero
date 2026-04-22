@@ -1,10 +1,26 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs + temp
+*.log
+.tmp/
+.cache/
+
+# Node (we don't use it, but just in case)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
