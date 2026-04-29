@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d50f51c9-488a-4b69-95c0-1b1b752122fb" name="Changes" comment="V1">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
@@ -62,7 +62,10 @@
       <workItem from="1776396407136" duration="25000" />
       <workItem from="1776402676652" duration="199000" />
       <workItem from="1776406928555" duration="15129000" />
-      <workItem from="1776872637770" duration="5562000" />
+      <workItem from="1776872637770" duration="6200000" />
+      <workItem from="1777171017484" duration="16000" />
+      <workItem from="1777171071248" duration="29000" />
+      <workItem from="1777479180928" duration="102000" />
     </task>
     <task id="LOCAL-00001" summary="V1">
       <option name="closed" value="true" />
@@ -88,7 +91,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775890995593</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="V1">
+      <option name="closed" value="true" />
+      <created>1776881574285</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776881574285</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

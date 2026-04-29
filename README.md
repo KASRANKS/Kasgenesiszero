@@ -10,8 +10,8 @@ The image, traits, ownership, and trade settlement all live inside Kaspa transac
 
 ## What it does
 
-- **Deploy** a collection of any size. Images are inscribed directly into transaction payloads, chunked if needed, with parallel workers up to 250x for large drops.
-- **Mint** randomly from any deployed collection. The mint is a real transaction in the DAG with the full image data.
+- **Deploy** a collection of any size up to 10,000 items. Images, video, and audio are inscribed directly into transaction payloads, chunked if needed, with parallel workers up to 250x for large drops.
+- **Mint** randomly from any deployed collection. The mint is a real transaction in the DAG with the full media data.
 - **Trade** through covenant-locked listings. The buyer's payment is enforced by the script. They cannot underpay, cannot redirect funds, cannot fake the transaction.
 - **Cancel** with a Schnorr signature on the IF-branch. Free, no self-payment, no protocol fee.
 - **Send** with a transfer payload. Ownership-enforced by consensus-visible event replay. Cheating transfers during an active listing are ignored.
@@ -20,7 +20,7 @@ The image, traits, ownership, and trade settlement all live inside Kaspa transac
 
 ## How it works
 
-**Inscriptions.** Every NFT is a real Kaspa transaction whose payload carries the image bytes (or chunk references), MIME type, name, traits, creator, and ownership. Anyone with a Kaspa node can decode and verify.
+**Inscriptions.** Every NFT is a real Kaspa transaction whose payload carries the media bytes (or chunk references), MIME type, name, traits, creator, and ownership. Anyone with a Kaspa node can decode and verify.
 
 **Collections.** A collection is a manifest transaction that lists all item template TX IDs. For collections over 80 items, the manifest is split into part transactions. No central registry.
 
@@ -40,6 +40,18 @@ Same settlement model as KRC-20 and Ordinals on the ownership side, with chain-e
 
 ---
 
+## Supported media
+
+| Type | Formats | Max items per collection | Max file size |
+|------|---------|--------------------------|---------------|
+| Images | PNG, JPG, GIF, WebP, AVIF | 10,000 | 3 MB (≤10 items) / 1.5 MB (11-1,000) / 1.25 MB (1,001-10,000) |
+| Video | MP4, WebM | 10 | 3 MB |
+| Audio | MP3, WAV, OGG | 10 | 3 MB |
+
+KRC-721 deployers: drop your existing images and JSON metadata. Match filenames (`0.png` + `0.json`) and Genesis Zero handles the rest.
+
+---
+
 ## How to use it
 
 1. Open [kasgenesiszero.com](https://kasgenesiszero.com).
@@ -52,22 +64,31 @@ Auto-locks after 10 minutes of inactivity. Back up your password. There is no re
 
 ---
 
+## Deploy speed
+
+Genesis Zero scales horizontally with workers. A 3,001-item collection with chunked images deploys in ~6 minutes 34 seconds on 80 parallel workers. Larger collections scale up to 250 workers.
+
+If a deploy gets interrupted (browser closed, network drop, etc.) the **⛔ Abort / Kill stuck workers** button can sweep any orphaned worker funds back to your main wallet. It also breaks any runaway worker chain in another tab/browser by spending the worker's UTXO from the current tab.
+
+---
+
 ## Fees
 
 Deploy fees are tiered by collection size:
 
-| Collection size     | Total  | Miners (80%) | Protocol (20%) | Max image size |
-|---------------------|--------|--------------|----------------|----------------|
-| 1 to 1,000 items    | 250 KAS | 200 KAS      | 50 KAS         | 1.5 MB         |
-| 1,001 to 5,000 items| 500 KAS | 400 KAS      | 100 KAS        | 0.5 MB         |
+| Collection size       | Total   | Miners (80%) | Protocol (20%) | Max file size  |
+|-----------------------|---------|--------------|----------------|----------------|
+| 1 to 10 items         | 100 KAS | 80 KAS       | 20 KAS         | 3 MB           |
+| 11 to 1,000 items     | 250 KAS | 200 KAS      | 50 KAS         | 1.5 MB         |
+| 1,001 to 10,000 items | 500 KAS | 400 KAS      | 100 KAS        | 1.25 MB        |
 
 Per-transaction fees:
 
-| Action  | Miners    | Protocol (maker)  | Total on top of price |
-|---------|-----------|-------------------|-----------------------|
-| Mint    | 2.5 KAS   | 2.5 KAS           | 5 KAS                 |
-| Buy     | 2.5 KAS   | 2.5 KAS           | 5 KAS                 |
-| Cancel  | ~0 KAS    | 0 KAS             | ~0 KAS                |
+| Action  | Miners (80%) | Protocol (20%) | Total on top of price |
+|---------|--------------|----------------|-----------------------|
+| Mint    | 4 KAS        | 1 KAS          | 5 KAS                 |
+| Buy     | 4 KAS        | 1 KAS          | 5 KAS                 |
+| Cancel  | ~0 KAS       | 0 KAS          | ~0 KAS                |
 
 Mint price on top of the fee goes to the collection creator. Buy price on top of the fee goes to the seller.
 
@@ -84,6 +105,7 @@ Mint price on top of the fee goes to the collection creator. Buy price on top of
 - Only seller can cancel for free: signature gate on the IF branch.
 - Wallet keys are AES-256-GCM encrypted, never logged, wiped on auto-lock.
 - Counterfeit shield hides NFTs that claim membership in collections they do not belong to, and hides items beyond a collection's declared supply.
+- All user-facing dynamic data sanitized against XSS (`isTxId()`, `jsStr()`, `isItemIdx()`, `san()`).
 
 **Honest limit.** NFT ownership is not native UTXO custody. It is resolved by replaying events in the DAG through the state machine, the same way KRC-20 balances are resolved. This is the strongest model possible until Kaspa ships native NFT UTXO locking in a future hardfork.
 
@@ -116,7 +138,7 @@ Built on Kaspa. Powered by the BlockDAG. No middlemen.
 - Twitter: [@Kas_Ranks](https://twitter.com/Kas_Ranks)
 - Companion projects:
   - [KasProof](https://kasproof.com), file timestamping on Kaspa
-  - [Kassword](https://kassword.com), encrypted password storage on Kaspa
+  - [Kassword](https://kassword.com), encrypted password and media storage on Kaspa
 
 ---
 
